@@ -7,6 +7,7 @@ import 'controllers/auth_controller.dart';
 import 'services/api_service.dart';
 import 'services/websocket_service.dart';
 import 'services/local_storage_service.dart';
+import 'services/local_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ Future<void> _initializeServices() async {
   
   // Initialize and register services with GetX
   await Get.putAsync(() => LocalStorageService().onInit().then((_) => LocalStorageService()));
+  await Get.putAsync(() => LocalNotificationService().onInit().then((_) => LocalNotificationService()));
   Get.put(WebSocketService());
 }
 

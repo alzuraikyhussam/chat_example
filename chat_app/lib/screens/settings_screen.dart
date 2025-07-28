@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../controllers/settings_controller.dart';
 import '../controllers/theme_controller.dart';
+import '../utils/network_test.dart';
+import '../services/local_notification_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -186,6 +188,68 @@ class SettingsScreen extends StatelessWidget {
                 .fadeIn(duration: 600.ms)
                 .slideY(begin: 0.3, end: 0),
             
+            SizedBox(height: 16),
+            
+            // Network & Development
+            _buildSettingsCard(
+              context,
+              title: 'Network & Development',
+              icon: Icons.network_check_outlined,
+              children: [
+                ListTile(
+                  title: Text('Test Connection'),
+                  subtitle: Text('Test connection to local server'),
+                  leading: Icon(Icons.wifi_outlined),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () => NetworkTest.testConnection(),
+                ),
+                
+                Divider(),
+                
+                ListTile(
+                  title: Text('Find Server'),
+                  subtitle: Text('Auto-discover server on network'),
+                  leading: Icon(Icons.search_outlined),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () => NetworkTest.findServerUrl(3000),
+                ),
+                
+                Divider(),
+                
+                ListTile(
+                  title: Text('Network Config'),
+                  subtitle: Text('View current network settings'),
+                  leading: Icon(Icons.settings_ethernet_outlined),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () => NetworkTest.showNetworkConfigDialog(),
+                ),
+                
+                Divider(),
+                
+                ListTile(
+                  title: Text('Test Notification'),
+                  subtitle: Text('Test local notifications'),
+                  leading: Icon(Icons.notifications_outlined),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                  onTap: () {
+                    try {
+                      final notificationService = Get.find<LocalNotificationService>();
+                      notificationService.showTestNotification();
+                    } catch (e) {
+                      Get.snackbar(
+                        'Error',
+                        'Notification service not available',
+                        snackPosition: SnackPosition.BOTTOM,
+                      );
+                    }
+                  },
+                ),
+              ],
+            )
+                .animate(delay: 900.ms)
+                .fadeIn(duration: 600.ms)
+                .slideY(begin: 0.3, end: 0),
+            
             SizedBox(height: 24),
             
             // Logout Button
@@ -202,7 +266,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             )
-                .animate(delay: 1000.ms)
+                .animate(delay: 1100.ms)
                 .fadeIn(duration: 600.ms)
                 .slideY(begin: 0.3, end: 0),
             

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:get/get.dart';
 import '../config/api_config.dart';
@@ -7,6 +8,7 @@ import '../models/user_model.dart';
 import '../controllers/chat_controller.dart';
 import '../controllers/auth_controller.dart';
 import 'api_service.dart';
+import 'local_notification_service.dart';
 
 class WebSocketService extends GetxService {
   static WebSocketService get instance => Get.find<WebSocketService>();
@@ -283,18 +285,25 @@ class WebSocketService extends GetxService {
   }
 
   void _showMessageNotification(MessageModel message) {
-    // This would integrate with your notification service
-    // For now, we'll use GetX snackbar as a placeholder
     final authController = Get.find<AuthController>();
     final currentUser = authController.currentUser.value;
     
     if (message.senderId != currentUser?.id) {
-      Get.snackbar(
-        'New Message',
-        message.content,
-        snackPosition: SnackPosition.TOP,
-        duration: Duration(seconds: 3),
-      );
+      // Try to use local notification service if available
+      try {
+        final notificationService = Get.find<LocalNotificationService>();
+        notificationService.showIncomingMessageNotification(message, 'Contact Name');
+      } catch (e) {
+        // Fallback to in-app notification
+        Get.snackbar(
+          'New Message',
+          message.content,
+          snackPosition: SnackPosition.TOP,
+          duration: Duration(seconds: 3),
+          backgroundColor: Get.theme.colorScheme.primary.withOpacity(0.9),
+          colorText: Colors.white,
+        );
+      }
     }
   }
 
