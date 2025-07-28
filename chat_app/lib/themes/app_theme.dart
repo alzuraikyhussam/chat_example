@@ -2,28 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Color schemes
+  // WhatsApp Web Color Scheme
   static const Color primaryColor = Color(0xFF00A884);
   static const Color primaryColorDark = Color(0xFF008069);
   static const Color accentColor = Color(0xFF25D366);
-  static const Color backgroundColor = Color(0xFFF7F8FA);
+  
+  // Light Theme Colors (WhatsApp Web)
+  static const Color backgroundColor = Color(0xFFF0F2F5);
   static const Color backgroundColorDark = Color(0xFF111B21);
   static const Color surfaceColor = Color(0xFFFFFFFF);
   static const Color surfaceColorDark = Color(0xFF202C33);
   static const Color cardColor = Color(0xFFFFFFFF);
   static const Color cardColorDark = Color(0xFF2A3942);
-  static const Color textPrimary = Color(0xFF3B4A54);
+  
+  // WhatsApp Text Colors
+  static const Color textPrimary = Color(0xFF111B21);
   static const Color textPrimaryDark = Color(0xFFE9EDEF);
   static const Color textSecondary = Color(0xFF667781);
   static const Color textSecondaryDark = Color(0xFF8696A0);
-  static const Color dividerColor = Color(0xFFE9EDEF);
-  static const Color dividerColorDark = Color(0xFF3B4A54);
   
-  // Message bubble colors
+  // WhatsApp UI Colors
+  static const Color dividerColor = Color(0xFFD1D7DB);
+  static const Color dividerColorDark = Color(0xFF3B4A54);
+  static const Color headerColor = Color(0xFFEDEDED);
+  static const Color headerColorDark = Color(0xFF2A3942);
+  
+  // WhatsApp Message Colors
   static const Color sentMessageColor = Color(0xFFD9FDD3);
   static const Color sentMessageColorDark = Color(0xFF005C4B);
   static const Color receivedMessageColor = Color(0xFFFFFFFF);
   static const Color receivedMessageColorDark = Color(0xFF202C33);
+  
+  // WhatsApp Chat Background
+  static const Color chatBackgroundColor = Color(0xFFE5DDD5);
+  static const Color chatBackgroundColorDark = Color(0xFF0B141A);
 
   // Light Theme
   static ThemeData lightTheme = ThemeData(
@@ -35,87 +47,85 @@ class AppTheme {
       primary: primaryColor,
       secondary: accentColor,
       surface: surfaceColor,
-      background: backgroundColor,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: textPrimary,
-      onBackground: textPrimary,
     ),
     
-    // Text Theme
-    textTheme: GoogleFonts.interTextTheme().copyWith(
-      displayLarge: GoogleFonts.inter(
+    // Text Theme with WhatsApp-like typography
+    textTheme: GoogleFonts.robotoTextTheme().copyWith(
+      displayLarge: GoogleFonts.roboto(
         fontSize: 32,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w300,
         color: textPrimary,
       ),
-      displayMedium: GoogleFonts.inter(
+      displayMedium: GoogleFonts.roboto(
         fontSize: 28,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w300,
         color: textPrimary,
       ),
-      displaySmall: GoogleFonts.inter(
+      displaySmall: GoogleFonts.roboto(
         fontSize: 24,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      headlineLarge: GoogleFonts.inter(
+      headlineLarge: GoogleFonts.roboto(
         fontSize: 22,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      headlineMedium: GoogleFonts.inter(
+      headlineMedium: GoogleFonts.roboto(
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      headlineSmall: GoogleFonts.inter(
+      headlineSmall: GoogleFonts.roboto(
         fontSize: 18,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      titleLarge: GoogleFonts.inter(
+      titleLarge: GoogleFonts.roboto(
+        fontSize: 17,
+        fontWeight: FontWeight.w400,
+        color: textPrimary,
+      ),
+      titleMedium: GoogleFonts.roboto(
         fontSize: 16,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      titleMedium: GoogleFonts.inter(
+      titleSmall: GoogleFonts.roboto(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: textPrimary,
-      ),
-      titleSmall: GoogleFonts.inter(
-        fontSize: 12,
         fontWeight: FontWeight.w500,
         color: textSecondary,
       ),
-      bodyLarge: GoogleFonts.inter(
+      bodyLarge: GoogleFonts.roboto(
         fontSize: 16,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      bodyMedium: GoogleFonts.inter(
+      bodyMedium: GoogleFonts.roboto(
         fontSize: 14,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
-      bodySmall: GoogleFonts.inter(
+      bodySmall: GoogleFonts.roboto(
         fontSize: 12,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w400,
         color: textSecondary,
       ),
-      labelLarge: GoogleFonts.inter(
+      labelLarge: GoogleFonts.roboto(
         fontSize: 14,
         fontWeight: FontWeight.w500,
         color: textPrimary,
       ),
-      labelMedium: GoogleFonts.inter(
+      labelMedium: GoogleFonts.roboto(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         color: textSecondary,
       ),
-      labelSmall: GoogleFonts.inter(
-        fontSize: 10,
+      labelSmall: GoogleFonts.roboto(
+        fontSize: 11,
         fontWeight: FontWeight.w500,
         color: textSecondary,
       ),
@@ -124,23 +134,22 @@ class AppTheme {
     // Card Theme
     cardTheme: CardTheme(
       color: cardColor,
-      elevation: 2,
-      shadowColor: Colors.black.withOpacity(0.1),
+      elevation: 1,
+      shadowColor: Colors.black.withOpacity(0.05),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
 
     // App Bar Theme
     appBarTheme: AppBarTheme(
-      backgroundColor: surfaceColor,
+      backgroundColor: headerColor,
       foregroundColor: textPrimary,
-      elevation: 1,
-      shadowColor: Colors.black.withOpacity(0.1),
+      elevation: 0,
       centerTitle: false,
-      titleTextStyle: GoogleFonts.inter(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
+      titleTextStyle: GoogleFonts.roboto(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
         color: textPrimary,
       ),
     ),
@@ -150,23 +159,23 @@ class AppTheme {
       filled: true,
       fillColor: surfaceColor,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: dividerColor),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: dividerColor),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: primaryColor, width: 2),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: Colors.red),
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      hintStyle: GoogleFonts.inter(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      hintStyle: GoogleFonts.roboto(
         color: textSecondary,
         fontSize: 14,
       ),
@@ -177,22 +186,21 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
-        elevation: 2,
-        shadowColor: primaryColor.withOpacity(0.3),
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        textStyle: GoogleFonts.inter(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        textStyle: GoogleFonts.roboto(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
         ),
       ),
     ),
 
     // Icon Theme
     iconTheme: IconThemeData(
-      color: textSecondary,
+      color: Color(0xFF54656F),
       size: 24,
     ),
 
@@ -214,168 +222,164 @@ class AppTheme {
       primary: primaryColor,
       secondary: accentColor,
       surface: surfaceColorDark,
-      background: backgroundColorDark,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
       onSurface: textPrimaryDark,
-      onBackground: textPrimaryDark,
     ),
     
-    // Text Theme
-    textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme).copyWith(
-      displayLarge: GoogleFonts.inter(
+    // Text Theme for dark mode
+    textTheme: GoogleFonts.robotoTextTheme(ThemeData.dark().textTheme).copyWith(
+      displayLarge: GoogleFonts.roboto(
         fontSize: 32,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w300,
         color: textPrimaryDark,
       ),
-      displayMedium: GoogleFonts.inter(
+      displayMedium: GoogleFonts.roboto(
         fontSize: 28,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w300,
         color: textPrimaryDark,
       ),
-      displaySmall: GoogleFonts.inter(
+      displaySmall: GoogleFonts.roboto(
         fontSize: 24,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      headlineLarge: GoogleFonts.inter(
+      headlineLarge: GoogleFonts.roboto(
         fontSize: 22,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      headlineMedium: GoogleFonts.inter(
+      headlineMedium: GoogleFonts.roboto(
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      headlineSmall: GoogleFonts.inter(
+      headlineSmall: GoogleFonts.roboto(
         fontSize: 18,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      titleLarge: GoogleFonts.inter(
+      titleLarge: GoogleFonts.roboto(
+        fontSize: 17,
+        fontWeight: FontWeight.w400,
+        color: textPrimaryDark,
+      ),
+      titleMedium: GoogleFonts.roboto(
         fontSize: 16,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      titleMedium: GoogleFonts.inter(
+      titleSmall: GoogleFonts.roboto(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: textPrimaryDark,
-      ),
-      titleSmall: GoogleFonts.inter(
-        fontSize: 12,
         fontWeight: FontWeight.w500,
         color: textSecondaryDark,
       ),
-      bodyLarge: GoogleFonts.inter(
+      bodyLarge: GoogleFonts.roboto(
         fontSize: 16,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      bodyMedium: GoogleFonts.inter(
+      bodyMedium: GoogleFonts.roboto(
         fontSize: 14,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
-      bodySmall: GoogleFonts.inter(
+      bodySmall: GoogleFonts.roboto(
         fontSize: 12,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w400,
         color: textSecondaryDark,
       ),
-      labelLarge: GoogleFonts.inter(
+      labelLarge: GoogleFonts.roboto(
         fontSize: 14,
         fontWeight: FontWeight.w500,
         color: textPrimaryDark,
       ),
-      labelMedium: GoogleFonts.inter(
+      labelMedium: GoogleFonts.roboto(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         color: textSecondaryDark,
       ),
-      labelSmall: GoogleFonts.inter(
-        fontSize: 10,
+      labelSmall: GoogleFonts.roboto(
+        fontSize: 11,
         fontWeight: FontWeight.w500,
         color: textSecondaryDark,
       ),
     ),
 
-    // Card Theme
+    // Card Theme for dark mode
     cardTheme: CardTheme(
       color: cardColorDark,
-      elevation: 2,
+      elevation: 1,
       shadowColor: Colors.black.withOpacity(0.3),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
 
-    // App Bar Theme
+    // App Bar Theme for dark mode
     appBarTheme: AppBarTheme(
-      backgroundColor: surfaceColorDark,
+      backgroundColor: headerColorDark,
       foregroundColor: textPrimaryDark,
-      elevation: 1,
-      shadowColor: Colors.black.withOpacity(0.3),
+      elevation: 0,
       centerTitle: false,
-      titleTextStyle: GoogleFonts.inter(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
+      titleTextStyle: GoogleFonts.roboto(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
         color: textPrimaryDark,
       ),
     ),
 
-    // Input Decoration Theme
+    // Input Decoration Theme for dark mode
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: surfaceColorDark,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: dividerColorDark),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: dividerColorDark),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: primaryColor, width: 2),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: Colors.red),
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      hintStyle: GoogleFonts.inter(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      hintStyle: GoogleFonts.roboto(
         color: textSecondaryDark,
         fontSize: 14,
       ),
     ),
 
-    // Elevated Button Theme
+    // Elevated Button Theme for dark mode
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
-        elevation: 2,
-        shadowColor: primaryColor.withOpacity(0.3),
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        textStyle: GoogleFonts.inter(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        textStyle: GoogleFonts.roboto(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
         ),
       ),
     ),
 
-    // Icon Theme
+    // Icon Theme for dark mode
     iconTheme: IconThemeData(
       color: textSecondaryDark,
       size: 24,
     ),
 
-    // Divider Theme
+    // Divider Theme for dark mode
     dividerTheme: DividerThemeData(
       color: dividerColorDark,
       thickness: 1,

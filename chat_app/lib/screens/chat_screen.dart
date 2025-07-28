@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import '../controllers/chat_controller.dart';
 import '../controllers/auth_controller.dart';
-import '../widgets/contact_list_item.dart';
-import '../widgets/message_bubble.dart';
 import '../routes/app_routes.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -14,16 +12,17 @@ class ChatScreen extends StatelessWidget {
     final AuthController authController = Get.find();
     
     return Scaffold(
+      backgroundColor: const Color(0xFFE5DDD5), // WhatsApp background
       body: Row(
         children: [
-          // Left Sidebar
+          // Left Sidebar - Contacts Panel
           Container(
-            width: 350,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+            width: 400,
+            decoration: const BoxDecoration(
+              color: Color(0xFFFFFFFF),
               border: Border(
                 right: BorderSide(
-                  color: Theme.of(context).dividerColor,
+                  color: Color(0xFFD1D7DB),
                   width: 1,
                 ),
               ),
@@ -32,60 +31,46 @@ class ChatScreen extends StatelessWidget {
               children: [
                 // Sidebar Header
                 Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
+                  height: 60,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFEDEDED),
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Color(0xFFD1D7DB),
+                        width: 1,
                       ),
-                    ],
+                    ),
                   ),
                   child: Row(
                     children: [
                       // User Avatar
                       Obx(() => CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.white.withOpacity(0.2),
+                        backgroundColor: const Color(0xFF00A884),
                         child: Text(
                           authController.currentUser.value?.name[0].toUpperCase() ?? 'U',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
+                            fontSize: 16,
                           ),
                         ),
                       )),
                       
-                      SizedBox(width: 12),
-                      
-                      Expanded(
-                        child: Obx(() => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              authController.currentUser.value?.name ?? 'User',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              'Online',
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        )),
-                      ),
+                      const Spacer(),
                       
                       // Header Actions
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.donut_large, color: Color(0xFF54656F)),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.chat, color: Color(0xFF54656F)),
+                      ),
                       PopupMenuButton<String>(
-                        icon: Icon(Icons.more_vert, color: Colors.white),
+                        icon: const Icon(Icons.more_vert, color: Color(0xFF54656F)),
                         onSelected: (value) {
                           switch (value) {
                             case 'profile':
@@ -100,36 +85,18 @@ class ChatScreen extends StatelessWidget {
                           }
                         },
                         itemBuilder: (context) => [
-                          PopupMenuItem(
+                          const PopupMenuItem(
                             value: 'profile',
-                            child: Row(
-                              children: [
-                                Icon(Icons.person),
-                                SizedBox(width: 8),
-                                Text('Profile'),
-                              ],
-                            ),
+                            child: Text('Profile'),
                           ),
-                          PopupMenuItem(
+                          const PopupMenuItem(
                             value: 'settings',
-                            child: Row(
-                              children: [
-                                Icon(Icons.settings),
-                                SizedBox(width: 8),
-                                Text('Settings'),
-                              ],
-                            ),
+                            child: Text('Settings'),
                           ),
-                          PopupMenuDivider(),
-                          PopupMenuItem(
+                          const PopupMenuDivider(),
+                          const PopupMenuItem(
                             value: 'logout',
-                            child: Row(
-                              children: [
-                                Icon(Icons.logout, color: Colors.red),
-                                SizedBox(width: 8),
-                                Text('Logout', style: TextStyle(color: Colors.red)),
-                              ],
-                            ),
+                            child: Text('Logout', style: TextStyle(color: Colors.red)),
                           ),
                         ],
                       ),
@@ -139,40 +106,137 @@ class ChatScreen extends StatelessWidget {
                 
                 // Search Bar
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: TextField(
-                    controller: chatController.searchController,
-                    onChanged: chatController.searchContacts,
-                    decoration: InputDecoration(
-                      hintText: 'Search contacts...',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide.none,
+                  padding: const EdgeInsets.all(8),
+                  color: const Color(0xFFF0F2F5),
+                  child: Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      controller: chatController.searchController,
+                      onChanged: chatController.searchContacts,
+                      decoration: const InputDecoration(
+                        hintText: 'Search or start new chat',
+                        hintStyle: TextStyle(color: Color(0xFF667781), fontSize: 14),
+                        prefixIcon: Icon(Icons.search, color: Color(0xFF667781), size: 20),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       ),
-                      filled: true,
-                      fillColor: Theme.of(context).colorScheme.background,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                   ),
                 ),
                 
                 // Contacts List
                 Expanded(
-                  child: Obx(() => ListView.builder(
-                    itemCount: chatController.filteredContacts.length,
-                    itemBuilder: (context, index) {
-                      final contact = chatController.filteredContacts[index];
-                      return ContactListItem(
-                        contact: contact,
-                        lastMessage: chatController.getLastMessage(contact.id),
-                        unreadCount: chatController.getUnreadCount(contact.id),
-                        isSelected: chatController.selectedContact.value?.id == contact.id,
-                        onTap: () => chatController.selectContact(contact),
-                        lastMessageTime: DateTime.now().subtract(Duration(minutes: index * 30)),
-                      );
-                    },
-                  )),
+                  child: Container(
+                    color: Colors.white,
+                    child: Obx(() => ListView.builder(
+                      itemCount: chatController.filteredContacts.length,
+                      itemBuilder: (context, index) {
+                        final contact = chatController.filteredContacts[index];
+                        final isSelected = chatController.selectedContact.value?.id == contact.id;
+                        
+                        return Container(
+                          color: isSelected ? const Color(0xFFE7F3FF) : Colors.transparent,
+                          child: InkWell(
+                            onTap: () => chatController.selectContact(contact),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              child: Row(
+                                children: [
+                                  // Profile Picture
+                                  CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: const Color(0xFFDDD4C0),
+                                    child: Text(
+                                      contact.name[0].toUpperCase(),
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF41525D),
+                                      ),
+                                    ),
+                                  ),
+                                  
+                                  const SizedBox(width: 12),
+                                  
+                                  // Contact info
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                contact.name,
+                                                style: const TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color(0xFF111B21),
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Text(
+                                              '12:00 PM', // Demo time
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Color(0xFF667781),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        
+                                        const SizedBox(height: 2),
+                                        
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                chatController.getLastMessage(contact.id),
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color(0xFF667781),
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                            ),
+                                            // Unread count
+                                            if (chatController.getUnreadCount(contact.id) > 0)
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                                decoration: const BoxDecoration(
+                                                  color: Color(0xFF00A884),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                constraints: const BoxConstraints(minWidth: 20, minHeight: 20),
+                                                child: Text(
+                                                  '${chatController.getUnreadCount(contact.id)}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    )),
+                  ),
                 ),
               ],
             ),
@@ -194,36 +258,41 @@ class ChatScreen extends StatelessWidget {
 
   Widget _buildWelcomeScreen(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.background,
+      color: const Color(0xFFF0F2F5),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 200,
-              height: 200,
+              width: 300,
+              height: 300,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                color: Colors.white.withOpacity(0.8),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.chat_bubble_outline,
-                size: 80,
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                size: 120,
+                color: Color(0xFF54656F),
               ),
             ),
-            SizedBox(height: 32),
-            Text(
-              'Welcome to ChatApp',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+            const SizedBox(height: 32),
+            const Text(
+              'WhatsApp Web',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w300,
+                color: Color(0xFF41525D),
               ),
             ),
-            SizedBox(height: 16),
-            Text(
-              'Select a contact to start chatting',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6),
+            const SizedBox(height: 16),
+            const Text(
+              'Send and receive messages without keeping your phone online.\nUse WhatsApp on up to 4 linked devices and 1 phone at the same time.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Color(0xFF667781),
+                height: 1.4,
               ),
             ),
           ],
@@ -237,12 +306,13 @@ class ChatScreen extends StatelessWidget {
       children: [
         // Chat Header
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
+          height: 60,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: const BoxDecoration(
+            color: Color(0xFFEDEDED),
             border: Border(
               bottom: BorderSide(
-                color: Theme.of(context).dividerColor,
+                color: Color(0xFFD1D7DB),
                 width: 1,
               ),
             ),
@@ -251,34 +321,36 @@ class ChatScreen extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                backgroundColor: const Color(0xFFDDD4C0),
                 child: Text(
                   chatController.selectedContact.value!.name[0].toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.primary,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF41525D),
                   ),
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       chatController.selectedContact.value!.name,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF111B21),
                       ),
                     ),
                     Text(
                       chatController.selectedContact.value!.isOnline 
-                          ? 'Online' 
-                          : 'Last seen recently',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: chatController.selectedContact.value!.isOnline
-                            ? Colors.green
-                            : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                          ? 'online' 
+                          : 'last seen recently',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF667781),
                       ),
                     ),
                   ],
@@ -286,33 +358,100 @@ class ChatScreen extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.videocam),
+                icon: const Icon(Icons.search, color: Color(0xFF54656F)),
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.call),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert, color: Color(0xFF54656F)),
               ),
             ],
           )),
         ),
         
-        // Messages Area
+        // Messages Area with WhatsApp background
         Expanded(
           child: Container(
-            color: Theme.of(context).colorScheme.background,
+            decoration: const BoxDecoration(
+              color: Color(0xFFE5DDD5),
+              image: DecorationImage(
+                image: AssetImage('assets/images/whatsapp_bg.png'), // Optional background pattern
+                fit: BoxFit.cover,
+                opacity: 0.06,
+              ),
+            ),
             child: Obx(() => ListView.builder(
               controller: chatController.messagesScrollController,
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               itemCount: chatController.messages.length,
               itemBuilder: (context, index) {
                 final message = chatController.messages[index];
-                return MessageBubble(
-                  message: message,
-                  isCurrentUser: message.senderId == 'currentUser',
+                final isCurrentUser = message.senderId == 'currentUser';
+                
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Row(
+                    mainAxisAlignment: isCurrentUser 
+                        ? MainAxisAlignment.end 
+                        : MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width * 0.6,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isCurrentUser
+                              ? const Color(0xFFD9FDD3) // Sent message color
+                              : Colors.white, // Received message color
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 1,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              message.content,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF111B21),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
+                                  style: const TextStyle(
+                                    fontSize: 11,
+                                    color: Color(0xFF667781),
+                                  ),
+                                ),
+                                if (isCurrentUser) ...[
+                                  const SizedBox(width: 4),
+                                  Icon(
+                                    message.isRead 
+                                        ? Icons.done_all 
+                                        : Icons.done,
+                                    size: 16,
+                                    color: message.isRead
+                                        ? const Color(0xFF53BDEB)
+                                        : const Color(0xFF667781),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             )),
@@ -321,37 +460,28 @@ class ChatScreen extends StatelessWidget {
         
         // Emoji Picker
         Obx(() => chatController.isEmojiPickerVisible.value
-            ? Container(
+            ? SizedBox(
                 height: 250,
                 child: EmojiPicker(
                   onEmojiSelected: (category, emoji) {
                     chatController.addEmoji(emoji.emoji);
                   },
-                  config: Config(
+                  config: const Config(
                     height: 250,
                     checkPlatformCompatibility: true,
-                    emojiViewConfig: EmojiViewConfig(
-                      backgroundColor: Theme.of(context).colorScheme.surface,
-                    ),
-                    bottomActionBarConfig: BottomActionBarConfig(
-                      backgroundColor: Theme.of(context).colorScheme.surface,
-                    ),
-                    categoryViewConfig: CategoryViewConfig(
-                      backgroundColor: Theme.of(context).colorScheme.surface,
-                    ),
                   ),
                 ),
               )
-            : SizedBox.shrink()),
+            : const SizedBox.shrink()),
         
-        // Message Input
+        // Message Input Area
         Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: const BoxDecoration(
+            color: Color(0xFFEDEDED),
             border: Border(
               top: BorderSide(
-                color: Theme.of(context).dividerColor,
+                color: Color(0xFFD1D7DB),
                 width: 1,
               ),
             ),
@@ -359,35 +489,51 @@ class ChatScreen extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-                onPressed: chatController.attachFile,
-                icon: Icon(Icons.attach_file),
-              ),
-              Expanded(
-                child: TextField(
-                  controller: chatController.messageController,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    hintText: 'Type a message...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.background,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  ),
-                  onSubmitted: (_) => chatController.sendMessage(),
+                onPressed: chatController.toggleEmojiPicker,
+                icon: const Icon(
+                  Icons.emoji_emotions_outlined,
+                  color: Color(0xFF54656F),
                 ),
               ),
               IconButton(
-                onPressed: chatController.toggleEmojiPicker,
-                icon: Icon(Icons.emoji_emotions_outlined),
+                onPressed: chatController.attachFile,
+                icon: const Icon(
+                  Icons.attach_file,
+                  color: Color(0xFF54656F),
+                ),
               ),
-              IconButton(
-                onPressed: chatController.sendMessage,
-                icon: Icon(
-                  Icons.send,
-                  color: Theme.of(context).colorScheme.primary,
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: TextField(
+                    controller: chatController.messageController,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      hintText: 'Type a message',
+                      hintStyle: TextStyle(color: Color(0xFF667781)),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    ),
+                    onSubmitted: (_) => chatController.sendMessage(),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color(0xFF00A884),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  onPressed: chatController.sendMessage,
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
               ),
             ],
