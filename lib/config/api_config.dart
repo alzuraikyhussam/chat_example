@@ -1,8 +1,10 @@
+import 'environment_config.dart';
+
 class ApiConfig {
-  // Base URLs - Update these with your actual API endpoints
-  static const String baseUrl = 'https://your-api-domain.com/api/v1';
-  static const String websocketUrl = 'wss://your-api-domain.com/ws';
-  static const String fileUploadUrl = 'https://your-api-domain.com/api/v1/files';
+  // Base URLs - Automatically configured based on environment
+  static String get baseUrl => EnvironmentConfig.baseUrl;
+  static String get websocketUrl => EnvironmentConfig.websocketUrl;
+  static String get fileUploadUrl => EnvironmentConfig.fileUploadUrl;
   
   // API Endpoints
   static const String login = '/auth/login';

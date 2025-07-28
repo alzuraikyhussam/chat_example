@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/api_config.dart';
+import '../config/environment_config.dart';
 import '../models/user_model.dart';
 import '../models/message_model.dart';
 import '../controllers/auth_controller.dart';
@@ -18,9 +19,9 @@ class ApiService {
   void initialize() {
     _dio = Dio(BaseOptions(
       baseUrl: ApiConfig.baseUrl,
-      connectTimeout: Duration(milliseconds: ApiConfig.connectTimeout),
-      receiveTimeout: Duration(milliseconds: ApiConfig.receiveTimeout),
-      sendTimeout: Duration(milliseconds: ApiConfig.sendTimeout),
+      connectTimeout: Duration(milliseconds: EnvironmentConfig.connectionTimeout),
+      receiveTimeout: Duration(milliseconds: EnvironmentConfig.receiveTimeout),
+      sendTimeout: Duration(milliseconds: EnvironmentConfig.sendTimeout),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -30,7 +31,11 @@ class ApiService {
     // Add interceptors
     _dio.interceptors.add(_AuthInterceptor());
     _dio.interceptors.add(_ErrorInterceptor());
-    _dio.interceptors.add(_LoggingInterceptor());
+    
+    // Add logging interceptor only in development
+    if (EnvironmentConfig.enableNetworkLogs) {
+      _dio.interceptors.add(_LoggingInterceptor());
+    }
   }
 
   // Token management
